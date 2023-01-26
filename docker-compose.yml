@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+    experimental-network:
+
+volumes:
+    mongo-volume:
+
+services:
+    app:
+        image: app:1.0
+        depends_on:
+            - mongo-db
+        container_name: app
+        restart: always
+        build:
+            context: src
+            dockerfile: dockerfile
+        command: python main.py
+        ports:
+            - ${APPPORT:-8000}:8000
+
+    mongo-db:
+        image: mongo:latest
+        container_name: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-lappis}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-lappis}
+        ports:
+            - ${DBPORT:-27017}:27017
+        volumes:
+            - mongo-volume:/data
+        networks:
+            - experimental-network
+
+    
+       
+        
+
+
+
+        
+
