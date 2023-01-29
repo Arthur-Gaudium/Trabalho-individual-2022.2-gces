@@ -33,12 +33,3 @@ services:
             - mongo-volume:/data
         networks:
             - experimental-network
-
-    
-       
-        
-
-
-
-        
-
